@@ -3,7 +3,7 @@ package bst
 import (
 	"errors"
 	"fmt"
-	"github.com/Qwental/go-containers/internal/map"
+	"github.com/Qwental/go-containers/map"
 	"reflect"
 	"strings"
 )
