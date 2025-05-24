@@ -18,17 +18,17 @@ type Node[K comparable, V any] struct {
 	Right  *Node[K, V]
 }
 
-type BSTMap[K comparable, V any] struct {
+type Map[K comparable, V any] struct {
 	root    *Node[K, V]
 	size    int
 	compare CompareFunc[K]
 }
 
 func NewBSTMap[K comparable, V any](compare CompareFunc[K]) _map.Map[K, V] {
-	return &BSTMap[K, V]{compare: compare}
+	return &Map[K, V]{compare: compare}
 }
 
-func (m *BSTMap[K, V]) Put(key K, value V) error {
+func (m *Map[K, V]) Put(key K, value V) error {
 	if m.compare == nil {
 		return errors.New("comparison function not provided")
 	}
@@ -46,7 +46,7 @@ func (m *BSTMap[K, V]) Put(key K, value V) error {
 	return nil
 }
 
-func (m *BSTMap[K, V]) put(key K, value V) {
+func (m *Map[K, V]) put(key K, value V) {
 	current := m.root
 	var parent *Node[K, V]
 
@@ -75,7 +75,7 @@ func (m *BSTMap[K, V]) put(key K, value V) {
 	}
 }
 
-func (m *BSTMap[K, V]) Get(key K) (V, error) {
+func (m *Map[K, V]) Get(key K) (V, error) {
 	if m.compare == nil {
 		return *new(V), errors.New("comparison function not provided")
 	}
@@ -93,7 +93,7 @@ func (m *BSTMap[K, V]) Get(key K) (V, error) {
 	return *new(V), errors.New("key not found")
 }
 
-func (m *BSTMap[K, V]) Delete(key K) error {
+func (m *Map[K, V]) Delete(key K) error {
 	if m.compare == nil {
 		return errors.New("comparison function not provided")
 	}
@@ -200,18 +200,18 @@ func (m *BSTMap[K, V]) Delete(key K) error {
 	return nil
 }
 
-func (m *BSTMap[K, V]) findMin(n *Node[K, V]) *Node[K, V] {
+func (m *Map[K, V]) findMin(n *Node[K, V]) *Node[K, V] {
 	for n.Right != nil {
 		n = n.Right
 	}
 	return n
 }
 
-func (m *BSTMap[K, V]) Size() int {
+func (m *Map[K, V]) Size() int {
 	return m.size
 }
 
-func (m *BSTMap[K, V]) Print() {
+func (m *Map[K, V]) Print() {
 	if m.root == nil {
 		fmt.Println("(empty tree)")
 		return
@@ -265,7 +265,7 @@ func (m *BSTMap[K, V]) Print() {
 	}
 }
 
-func (m *BSTMap[K, V]) AsciiPrint() {
+func (m *Map[K, V]) AsciiPrint() {
 	if m.root == nil {
 		fmt.Println("(empty tree)")
 		return
@@ -274,7 +274,7 @@ func (m *BSTMap[K, V]) AsciiPrint() {
 	m.printNode(m.root, 0)
 }
 
-func (m *BSTMap[K, V]) printNode(n *Node[K, V], depth int) {
+func (m *Map[K, V]) printNode(n *Node[K, V], depth int) {
 	if n == nil {
 		return
 	}
@@ -284,7 +284,7 @@ func (m *BSTMap[K, V]) printNode(n *Node[K, V], depth int) {
 	m.printNode(n.Left, depth+1)
 }
 
-func (m *BSTMap[K, V]) getNode(key K) (*Node[K, V], error) {
+func (m *Map[K, V]) getNode(key K) (*Node[K, V], error) {
 	if m.compare == nil {
 		return nil, errors.New("comparison function not provided")
 	}
@@ -303,7 +303,7 @@ func (m *BSTMap[K, V]) getNode(key K) (*Node[K, V], error) {
 	return nil, errors.New("key not found")
 }
 
-func (m *BSTMap[K, V]) GetRight(key K) (rightKey K, rightValue V, err error) {
+func (m *Map[K, V]) GetRight(key K) (rightKey K, rightValue V, err error) {
 	node, err := m.getNode(key)
 	if err != nil {
 		return rightKey, rightValue, err
@@ -314,7 +314,7 @@ func (m *BSTMap[K, V]) GetRight(key K) (rightKey K, rightValue V, err error) {
 	return node.Right.Key, node.Right.Value, nil
 }
 
-func (m *BSTMap[K, V]) GetLeft(key K) (leftKey K, leftValue V, err error) {
+func (m *Map[K, V]) GetLeft(key K) (leftKey K, leftValue V, err error) {
 	node, err := m.getNode(key)
 	if err != nil {
 		return leftKey, leftValue, err
@@ -325,7 +325,7 @@ func (m *BSTMap[K, V]) GetLeft(key K) (leftKey K, leftValue V, err error) {
 	return node.Left.Key, node.Left.Value, nil
 }
 
-func (m *BSTMap[K, V]) GetParent(key K) (parentKey K, parentValue V, err error) {
+func (m *Map[K, V]) GetParent(key K) (parentKey K, parentValue V, err error) {
 	node, err := m.getNode(key)
 	if err != nil {
 		return parentKey, parentValue, err
@@ -336,7 +336,7 @@ func (m *BSTMap[K, V]) GetParent(key K) (parentKey K, parentValue V, err error) 
 	return node.Parent.Key, node.Parent.Value, nil
 }
 
-func (m *BSTMap[K, V]) GetDepth(key K) (depth int, err error) {
+func (m *Map[K, V]) GetDepth(key K) (depth int, err error) {
 	node, err := m.getNode(key)
 	if err != nil {
 		return -1, err

@@ -30,7 +30,7 @@ func TestAll(t *testing.T) {
 	})
 }
 func TestPut_EmptyMap(t *testing.T) {
-	m := NewBSTMap[int, string](compareInt).(*BSTMap[int, string])
+	m := NewBSTMap[int, string](compareInt).(*Map[int, string])
 
 	if m.Size() != 0 {
 		t.Errorf("New map should be empty, got size %d", m.Size())
@@ -38,7 +38,7 @@ func TestPut_EmptyMap(t *testing.T) {
 }
 
 func TestPut_SingleInsert(t *testing.T) {
-	m := NewBSTMap[int, string](compareInt).(*BSTMap[int, string])
+	m := NewBSTMap[int, string](compareInt).(*Map[int, string])
 
 	err := m.Put(1, "one")
 	if err != nil {
@@ -59,7 +59,7 @@ func TestPut_SingleInsert(t *testing.T) {
 }
 
 func TestPut_MultipleInserts(t *testing.T) {
-	m := NewBSTMap[int, string](compareInt).(*BSTMap[int, string])
+	m := NewBSTMap[int, string](compareInt).(*Map[int, string])
 
 	testCases := []struct {
 		key   int
@@ -95,7 +95,7 @@ func TestPut_MultipleInserts(t *testing.T) {
 }
 
 func TestPut_UpdateExistingKey(t *testing.T) {
-	m := NewBSTMap[int, string](compareInt).(*BSTMap[int, string])
+	m := NewBSTMap[int, string](compareInt).(*Map[int, string])
 
 	err := m.Put(1, "one")
 	if err != nil {
@@ -121,7 +121,7 @@ func TestPut_UpdateExistingKey(t *testing.T) {
 }
 
 func TestPut_NilCompareFunction(t *testing.T) {
-	m := &BSTMap[int, string]{} // No compare function provided
+	m := &Map[int, string]{} // No compare function provided
 
 	err := m.Put(1, "one")
 	if err == nil {
@@ -135,7 +135,7 @@ func TestPut_NilCompareFunction(t *testing.T) {
 }
 
 func TestBST_CheckNodesDepthAndValues1(t *testing.T) {
-	m := NewBSTMap[int, string](compareInt).(*BSTMap[int, string])
+	m := NewBSTMap[int, string](compareInt).(*Map[int, string])
 
 	// Вставка элементов как в первом C++ тесте
 	m.Put(5, "a")
@@ -185,7 +185,7 @@ func TestBST_CheckNodesDepthAndValues1(t *testing.T) {
 }
 
 func TestBST_CheckNodesDepthAndValues2(t *testing.T) {
-	m := NewBSTMap[int, int](compareInt).(*BSTMap[int, int])
+	m := NewBSTMap[int, int](compareInt).(*Map[int, int])
 
 	// Вставка элементов как во втором C++ тесте
 	m.Put(1, 5)
@@ -231,7 +231,7 @@ func TestBST_CheckNodesDepthAndValues2(t *testing.T) {
 }
 
 func TestBST_CheckNodesAfterDeletion(t *testing.T) {
-	m := NewBSTMap[int, string](compareInt).(*BSTMap[int, string])
+	m := NewBSTMap[int, string](compareInt).(*Map[int, string])
 
 	// Вставка элементов как в третьем C++ тесте
 	m.Put(6, "a")
